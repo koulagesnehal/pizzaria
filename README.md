@@ -1,2 +1,0 @@
-# pizzaria
-for ordering pizza
