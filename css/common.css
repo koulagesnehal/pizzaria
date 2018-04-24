@@ -1,1 +1,92 @@
 
+/******************************** Header CSS *******************************/
+	
+	#homeMainDiv{
+		max-height:100%;
+		max-width:100%;
+		font-family: calibri;
+		font-size: 20px;
+	}
+	.logo{
+		margin-left:15%; 
+		width:10%;
+	}
+	#navigation{
+		height:160px;
+		margin-top:30px;
+	}
+	#navBar{
+		background-color:red;border-radius: 15px 15px 15px 15px;
+		float:right;
+		margin-top:50px;
+		margin-right: 15%;
+	}
+	#navBar ul {
+		list-style-type: none;
+		margin-right: 0;
+		padding: 0;
+		overflow: hidden;
+	}
+	#navBar li {
+		float: left;
+	}
+	#navBar li a {
+		display: block;
+		text-align: center;
+		padding: 10px 70px;
+		text-decoration: none;
+		color: white;
+		font-size: 20px;
+	}
+	#navBar li a:hover {
+		color:#d7d4ce;
+	}
+	ol li{
+		padding: 10px
+	}
+
+/******************************* Body CSS ***********************************/
+	body{
+		margin:0px;
+	}
+	#imageHolder{ 
+		display:inline;
+		border:1px solid #a3a3a3;
+		transition: 1s;
+		height:290px; 
+		margin-left:35px; 
+		margin-top:35px; 
+		width: 22%; 
+		float:left;
+	}
+	#imageHolder:hover{
+		border: 1px solid red;
+		cursor: pointer;
+		transform: scale(1.05);
+	}	
+	#imageHolder p{ 
+		margin-left:10px; 
+		font-size:18px;
+	}
+	.textContent{ 
+		width:80%;
+		margin-left: 10%;
+		margin-top: 80px;
+		color: #666666;
+	}
+	.textContent span{
+		font-size:3em;
+		color:#ff0000;
+	}
+	#itemDetails{
+		display:none;
+	}
+	
+	
+/******************************** Footer CSS *********************************/	
+	
+	#footer{
+		width:100%;
+		font-size:1.5em;
+		Color:grey;
+	}
