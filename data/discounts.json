@@ -1,0 +1,13 @@
+
+var discounts = [
+{"promoCode" : "BSI2TL6Q" , "discountPercentage" : "5" , "discountAmount" : "0" },
+{"promoCode" : "SP396NKH" , "discountPercentage" : "0" , "discountAmount" : "100" },
+{"promoCode" : "QP6G8N1H" , "discountPercentage" : "7" , "discountAmount" : "0" },
+{"promoCode" : "VI91M44H" , "discountPercentage" : "0" , "discountAmount" : "80" },
+{"promoCode" : "H29EZPHN" , "discountPercentage" : "6" , "discountAmount" : "0" },
+{"promoCode" : "LGEMX23U" , "discountPercentage" : "0" , "discountAmount" : "60" },
+{"promoCode" : "0DYNXOY2" , "discountPercentage" : "10" , "discountAmount" : "0" },
+{"promoCode" : "BFZLBU54" , "discountPercentage" : "7" , "discountAmount" : "0" },
+{"promoCode" : "RFKGBV23" , "discountPercentage" : "0" , "discountAmount" : "90" }, 
+{"promoCode" : "804HNZYR" , "discountPercentage" : "8" , "discountAmount" : "0" } ];
+

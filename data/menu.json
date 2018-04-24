@@ -1,0 +1,9 @@
+
+var menuItemDetails = [
+{"itemId" : "1" , "itemName" : "Veggie Delight" , "itemPriceSmall" : "200" , "itemPriceMedium" : "300" , "itemPriceLarge" : "400" , "itemImage" : "images/pizza1.png" , "itemToppings" : "Corn, Bell Pepper, Olives, Red Chillies, Onion, Tomato" },
+{"itemId" : "2" , "itemName" : "Chicken Pepperoni" , "itemPriceSmall" : "300" , "itemPriceMedium" : "400" , "itemPriceLarge" : "500" , "itemImage" : "images/pizza2.png" , "itemToppings" : "Chicken, Mozzarella, Tomatoes, Onion"}, 
+{"itemId" : "3" , "itemName" : "Veg Exotica" , "itemPriceSmall" : "250" , "itemPriceMedium" : "350" , "itemPriceLarge" : "450" , "itemImage" : "images/pizza3.png" , "itemToppings" : "Mushrooms, Broccoli, tomatoes, Olives"}, 
+{"itemId" : "4" , "itemName" : "Double Trouble" , "itemPriceSmall" : "350" , "itemPriceMedium" : "450" , "itemPriceLarge" : "550" , "itemImage" : "images/pizza4.png" , "itemToppings" : "Lebanese Chicken, mustard sause, Mozzarella"}, 
+{"itemId" : "5" , "itemName" : "Bread Sticks" , "itemPriceSmall" : "100" , "itemPriceMedium" : "200" , "itemPriceLarge" : "300" , "itemImage" : "images/breadSticks1.jpg" , "itemToppings" : ""},
+{"itemId" : "6" , "itemName" : "Cheesy Bread Sticks" , "itemPriceSmall" : "150" , "itemPriceMedium" : "250" , "itemPriceLarge" : "350" , "itemImage" : "images/breadSticks2.jpg" , "itemToppings" : ""},  ];
+
