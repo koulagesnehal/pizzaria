@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pizzaria</title>
+	<meta charset="UTF-8">
+	<link rel="shortcut icon" type="image/png" href="images/logo1.png"/>
+	<link rel="stylesheet" type="text/css" href="css/common.css" />
+	<link rel="stylesheet" type="text/css" href="css/lightbox.min.css" />
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<script src="js/jquery.min.js"></script>
+	<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+	<script type="text/javascript" src="js/lightbox-plus-jquery.min.js"></script>
+	<script type="text/javascript" src="data/menu.json"></script>
+	<script type="text/javascript" src="data/discounts.json"></script>
+	<script language="JScript">
+	var cart = [];
+	var itemIdG = 1;
+	var itemIDArray = [];
+	var itemInchesArray = [];
+	var itemQuantityArray = [];
+	var itemPriceArray = [];
+	var totalPrice = 0;
+	var discount = 0;
+	var itemsCounter = 0;
+	var json = [];
+	function itemDisplay() {
+		for (i=0;i<menuItemDetails.length;i++)
+		{
+			$('#menuContainer').append('<div id="imageHolder"><img height="210px" width="100%" style="background-color:#fbf1d6" src="'+menuItemDetails[i].itemImage+'"/><br/><p>'+menuItemDetails[i].itemName+'<br/>From: &#8377; '+menuItemDetails[i].itemPriceSmall+'<a href="#" onclick="displayDetails('+menuItemDetails[i].itemId+');"><span style="font-size:0.9em; color:#666666; float:right; margin-right:10px; text-decoration:underline">Add to Cart</span></a></p></div>');  
+		}
+	}
+	function displayDetails(itemId) {
+		itemIdG = itemId;
+		//alert("You have added  " + menuItemDetails[itemId - 1].itemName );
+		cart.push(itemId);
+		//alert(cart.length);
+		//alert(menuItemDetails[itemId - 1].itemImage);
+		$('#itemToppings').html( menuItemDetails[itemId - 1].itemToppings );
+		$('#itemImage').attr( 'src' , menuItemDetails[itemId - 1].itemImage);
+		document.getElementById('itemPrice').value = menuItemDetails[itemId - 1].itemPriceSmall;
+		document.getElementById('itemDetails').style.display = 'block';
+	}
+
+    $(document).ready(function(event){
+		$(this).ready(function displayMenu(){	
+			
+			document.getElementById('cart').style.display='none';	
+			document.getElementById('cartDetails').style.display='none';	
+			// Getting count of images available in a folder
+			
+			itemDisplay();	
+				
+		});
+	});
+	
+	function changeDropDownValue(e){
+		//alert(e.target.value);
+		if (e.target.value == 'Small'){
+			document.getElementById("itemPrice").value = menuItemDetails[itemIdG - 1].itemPriceSmall;
+		}
+		if (e.target.value == 'Medium'){
+			document.getElementById("itemPrice").value = menuItemDetails[itemIdG - 1].itemPriceMedium;
+		}
+		if (e.target.value == 'Large'){
+			document.getElementById("itemPrice").value = menuItemDetails[itemIdG - 1].itemPriceLarge;
+		}
+		var itemPrice = document.getElementById("itemPrice").value;
+		var itemQuantity = document.getElementById("itemQuantity").value;
+		var totalPrice = itemPrice * itemQuantity;
+		//alert(totalPrice);
+		document.getElementById("itemPrice").value = totalPrice;
+	}
+	
+	function resetModalBox(){
+		document.getElementById('itemDetails').style.display='none';
+		var dropDown = document.getElementById('itemInches');
+        dropDown.selectedIndex = 0;
+	}
+	
+	function addToCart(){
+		var itemInchesvar = document.getElementById('itemInches').value;
+		itemInchesArray.push(itemInchesvar);
+		var itemQuantityvar = document.getElementById("itemQuantity").value;
+		itemQuantityArray.push(itemQuantityvar);
+		itemIDArray.push(itemIdG);
+		var itemPriceArrayvar = document.getElementById('itemPrice').value;
+		itemPriceArray.push(itemPriceArrayvar);
+		itemsCounter++;
+		$('#itemsCounter').html(itemsCounter);
+		//alert(itemInchesArray.length+itemQuantityArray.length+itemIDArray.length);
+		//alert(itemInchesvar+itemQuantityvar);
+		resetModalBox();
+	}
+	function goToCart(){
+		if(itemsCounter != 0)
+		{
+			document.getElementById('menu').style.display='none';
+			document.getElementById('cart').style.display='block';
+			document.getElementById('cartDetails').style.display='block';
+			//alert(itemInchesArray.length+itemQuantityArray.length+itemIDArray.length);
+			for(i=0;i<itemIDArray.length;i++)
+			{
+				var tempId = itemIDArray[i];
+				//alert('itemName: '+menuItemDetails[tempId - 1].itemName+' Quantity:'+itemQuantityArray[i]+' Inches:'+itemInchesArray[i]);
+				$('#itemCart').append('<tr><td>'+menuItemDetails[tempId - 1].itemName+' - ('+itemInchesArray[i]+')</td><td>'+itemPriceArray[i]/itemQuantityArray[i]+'</td><td id="itemQuantityCart">'+itemQuantityArray[i]+'</td><td><span id="removeItemCart" style="cursor:pointer; color:red; text-decoration:underline" onclick="removeItemCart('+itemIDArray[i]+');">Remove</span></td><td id="itemTotalCart">'+itemPriceArray[i]+'</td></tr>');
+				totalPrice = totalPrice + parseInt(itemPriceArray[i]);
+			}
+			$('#total').html('&#8377; '+totalPrice);
+			$('#gst').html('&#8377; '+totalPrice*5/100);
+			$('#discount').html('&#8377; -'+discount);
+			$('#totalAmount').html('&#8377; '+(totalPrice*105/100-discount));
+		}else 
+			alert('Please add something to your cart');
+	}
+	function removeItemCart(itemId){
+		//alert(itemId);	
+		var arrayIndexvar = itemIDArray.indexOf(itemId,0);
+		itemIDArray.splice(arrayIndexvar,1);
+		itemInchesArray.splice(arrayIndexvar,1);
+		itemQuantityArray.splice(arrayIndexvar,1);
+		itemPriceArray.splice(arrayIndexvar,1);
+		$('#itemCart').html('');
+		totalPrice = 0;
+		discount = 0;		
+		itemsCounter--;
+		$('#itemsCounter').html(itemsCounter);
+		goToCart();
+	}
+	function goToMenu(){
+		document.getElementById('menu').style.display='block';
+		document.getElementById('cart').style.display='none';
+		document.getElementById('cartDetails').style.display='none';
+		$('#itemCart').html('');
+		totalPrice = 0;	
+		discount = 0;
+	}
+	function applyPromoCode(){
+		for (i=0;i<discounts.length;i++)
+		{
+			
+			if(discounts[i].promoCode == document.getElementById("promoText").value)
+			{
+				//alert('correct');
+				if(discounts[i].discountAmount == 0)
+				{
+					discount = (totalPrice*discounts[i].discountPercentage/100);
+					$('#discountText').append(' ('+discounts[i].discountPercentage+'%)');
+				}else
+				{
+					discount = discounts[i].discountAmount;
+					$('#discountText').append(' (&#8377;'+discounts[i].discountPercentage+')');
+				}
+				$('#discount').html('&#8377; -'+discount);
+				$('#totalAmount').html('&#8377; '+(totalPrice*105/100-discount));
+				$('#promoText').removeClass("promoCross");
+				$('#promoText').addClass("promoTick");
+				document.getElementById('promoText').style.border='2px solid #30ad23';
+				break;
+			}else
+			{			
+				//alert('wrong');
+				$('#promoText').addClass("promoCross");
+				document.getElementById('promoText').style.border='2px solid red';
+			}
+		}
+	}
+	function confirmOrder()
+	{
+		var items = "";
+		for(i=0;i<itemIDArray.length;i++)
+			{
+				var tmpIt = itemIDArray[i];
+				//alert(menuItemDetails[tmpIt - 1].itemName);
+				items = items + (menuItemDetails[tmpIt - 1].itemName+'-'+itemQuantityArray[i]+'-'+itemInchesArray[i]+'-'+parseInt(itemPriceArray[i])+', ');
+				
+			}
+		price = ''+totalPrice+'';
+		gst = ''+totalPrice*5/100+'';	
+		discount = ''+discount+'';	
+		totalAmount = ''+(totalPrice*105/100-discount)+'';	
+		
+		ItemListString = JSON.stringify({items,price,gst,discount,totalAmount});
+		xmlhttp = new XMLHttpRequest();
+		xmlhttp.open("POST", "process.php", true);
+		xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xmlhttp.send("x=" + ItemListString);
+		xmlhttp.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				alert(this.responseText);
+				window.location.href = "confirmOrder.html";
+			}
+		};
+	}
+    </script>
+	<style>
+	input[type="text"]
+	{
+		background: transparent;
+		border: none;
+	}
+	th, td {
+		padding: 15px;
+	}
+	#promoText{
+		padding: 5px;
+		box-sizing: border-box;
+		border: 1.5px solid orange;
+		border-radius: 4px;
+		color:grey;
+	}
+	input[type="text"].promoTick{
+		background: url('images/tick.png') no-repeat;
+		background-position: 170px 6px;
+		background-size: 15% 70%;
+	}
+	input[type="text"].promoCross{
+		background: url('images/cross.png') no-repeat;
+		background-position: 170px 6px;
+		background-size: 15% 70%;
+	}
+	#proceed{
+		margin-top: 50px;
+		margin-left:74%;
+	}
+	input[type="submit"]
+	{
+		border-radius: 5px;
+		background-color:#ff0000;
+		color:white;
+		padding:0px 15px;
+	}
+	input[type="submit"]:hover
+	{
+		color:#d7d4ce;
+		box-shadow: 0 5px 5px 0 rgba(0,0,0,0.2),0 5px 5px 0 rgba(0,0,0,0.19);
+	}
+	</style>
+</head>
+<body>
+	<div id="homeMainDiv">
+	<!------------------------- Header Content------------------->
+		<div id="navigation">
+			<img class="logo" src="images/logo1.png"/>
+			<div id="navBar">
+				<ul>
+				  <li><a style="color:#f9e634" href="home.html">Home</a></li>
+				  <li><a href="aboutUs.html">About Us</a></li>
+				  <li><a href="contactUs.html">Contact Us</a></li>
+				</ul>
+			</div>
+		</div>
+	<!------------------------- Body Content------------------->
+	<div id="menu"  style="margin-left:8%; width:82%; margin-top:50px; height:800px;" class="textContent">
+		<span style="margin-left:35px; font-size:2.5em">Menu</span><br/>
+		<span onclick="goToCart()" style="float:right; margin-right:35px; font-size:1em; text-decoration:underline; cursor:pointer">GO TO CART (<span id="itemsCounter" style=" font-size:1em; text-decoration:underline; cursor:pointer">0</span>)</span><br/>
+		<div id="menuContainer">
+		</div>
+		
+		<div id="ourSpecialContainer">
+		</div>
+	</div>
+	
+	<div id="cart" style="margin-left:8%; width:82%" class="textContent">
+		<span onclick="goToMenu()" style="margin-left:35px; font-size:1em; text-decoration:underline; cursor:pointer;">BACK</span>
+	</div>
+	
+	<div id="cartDetails" style="">
+		<div style="margin-left:65%">
+			<input id="promoText" type="text" value="Enter Promo Code" name="promoText" size="20" onfocus="this.value=''">
+			<input id="promoCode" type="submit" value="Apply" onclick="applyPromoCode()">
+		</div>
+		<table id="cartTable" style="width:70%; margin-left:15%; margin-top:30px" border="1">
+			<thead>
+				<tr>
+					<th>Description</th>
+					<th>Price</th>
+					<th>Quantity</th>
+					<th>Option</th>
+					<th>Amount</th>
+				</tr>
+			</thead>
+			<tfoot>
+				<tr>
+					<td colspan="4" style="text-align:right">Total</td>
+					<td id="total"></td>
+				</tr>
+				<tr>
+					<td colspan="4" style="text-align:right">GST*</td>
+					<td id="gst"></td>
+				</tr>
+				<tr>
+					<td id="discountText" colspan="4" style="text-align:right">Discount</td>
+					<td id="discount"></td>
+				</tr>
+				<tr>
+					<td colspan="4" style="text-align:right; font-weight:bold; text-decoration:underline">Total Amount</td>
+					<td id="totalAmount" style="font-weight:bold; text-decoration:underline"></td>
+				</tr>
+			</tfoot>
+			<tbody id="itemCart">
+			</tbody>
+		</table>
+		<div>			
+			<input id="proceed" type="submit" value="Confirm Order" onclick="confirmOrder()">
+		</div>
+	</div>
+	
+	<div id="itemDetails" class="w3-modal"> 
+		<div class="w3-modal-content w3-animate-top w3-card-4">
+			<header class=""> 
+				<span onclick="resetModalBox()" 
+				class="w3-button w3-display-topright">&times;</span>
+				<h2 style="margin-left:20px;">Please enter details:</h2>
+			</header>
+			<div class="w3-container">
+				<img id="itemImage" width="400px" style="margin-top:50px" src=""/>
+				<div style="width:325px; float:right;height:350px">
+					<form action="">
+						<label>Inches:</label><br/>
+						<select id="itemInches" name="inches" onchange="changeDropDownValue(event)">
+							<option value="Small">Small - 8"/20cm</option>
+							<option value="Medium">Medium - 10"/25cm</option>
+							<option value="Large">Large - 12"/30cm</option>
+						</select><br/><br/>
+						<label>Quantity:</label><br/>
+						<input type="number" id="itemQuantity" value="1" min="1" onchange="changeDropDownValue(event)"><br/><br/>
+						<label>Price per piece:</label>
+						<input type="text" id="itemPrice" value="200" disabled>
+						<br><br>
+						<input type="submit" Value="Add" onclick="addToCart()">
+					</form>
+				</div>
+			</div>
+			<footer class="w3-container w3-teal">
+				<p><span><b>Contains Toppings: </b></span><span id="itemToppings"></span></p>
+			</footer>
+		</div>
+	</div>
+	
+	<!------------------------- Footer Content------------------->
+		<div id="footer">
+			<p style="margin-left:10%;"><span style="color:#ff0000">Pizzaria</span></p>
+			<hr style="width:80%; border-top: dotted 1px;" />
+			<p style="margin-left:10%; font-size:0.5em">&#169; All copyrights reserved</p>
+		</div>
+		
+	</div>
+	
+</body>
+</html>

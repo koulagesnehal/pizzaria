@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pizzaria</title>
+	<meta charset="UTF-8">
+	<link rel="shortcut icon" type="image/png" href="images/logo1.png"/>
+	<link rel="stylesheet" type="text/css" href="css/common.css" />
+	<script src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/lightbox-plus-jquery.min.js"></script>
+	<script language="JScript">
+		$(document).ready(function(event){
+			$(this).ready(function displayTimer(){	
+				
+			document.getElementById('timer').innerHTML =  30 + ":" + 00;
+			startTimer();
+					
+			});
+		});
+
+		function startTimer() 
+		{
+			var presentTime = document.getElementById('timer').innerHTML;
+			var timeArray = presentTime.split(/[:]+/);
+			var m = timeArray[0];
+			var s = checkSecond((timeArray[1] - 1));
+			if(s == 59)
+			{
+				m=m-1
+			}
+			if (m < 0 && s >= 0)
+			{
+				//alert('timer completed');				
+				document.getElementById('msg').innerHTML =	"Oops,";
+				document.getElementById('timeCounter').innerHTML =	'<span style="color:red; font-size: 1.5em;">Oops...</span> <br/>We regret for a late delivery. Please contact on +91 9999999999. <br/>Sorry for the inconvenience caused.';
+			}
+		  
+			document.getElementById('timer').innerHTML =	m + ":" + s;
+			setTimeout(startTimer, 1000);
+		}
+
+		function checkSecond(sec) 
+		{
+			if (sec < 10 && sec >= 0) 
+			{
+				sec = "0" + sec
+			}; // add zero in front of numbers < 10
+			if (sec < 0) 
+			{
+				sec = "59"
+			};
+			return sec;
+		}
+    </script>
+	<style>
+		#timeCounter
+		{
+			margin-left:5%;
+			margin-top:100px;
+			font-size: 1.5em;
+		}
+		#timer
+		{
+			font-size:20px;
+			font-size: 1.2em;
+		}
+	</style>
+</head>
+<body>
+	<div id="homeMainDiv">
+	<!------------------------- Header Content------------------->
+		<div id="navigation">
+			<img class="logo" src="images/logo1.png"/>
+			<div id="navBar">
+				<ul>
+				  <li><a style="color:#f9e634" href="home.html">Home</a></li>
+				  <li><a href="aboutUs.html">About Us</a></li>
+				  <li><a href="contactUs.html">Contact Us</a></li>
+				</ul>
+			</div>
+		</div>
+	<!------------------------- Body Content------------------->
+	<div id="menu"  style="width:82%; margin-top:50px; height:800px;" class="textContent">
+		<div id="timeCounter"><span id="msg" style="color:green; font-size: 1.5em;">Thank you.</span> <br/>Your order will arrive in <span id="timer"></span> minutes.</div>
+	</div>
+	
+	
+	<!------------------------- Footer Content------------------->
+		<div id="footer">
+			<p style="margin-left:10%;"><span style="color:#ff0000">Pizzaria</span></p>
+			<hr style="width:80%; border-top: dotted 1px;" />
+			<p style="margin-left:10%; font-size:0.5em">&#169; All copyrights reserved</p>
+		</div>
+		
+	</div>
+	
+</body>
+</html>
